@@ -1,818 +1,73 @@
 <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Untuk Nona Asya</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
-
 <style>
-
 *{margin:0;padding:0;box-sizing:border-box;}
-
 body{
-
 font-family:'Quicksand',sans-serif;
-
 background:linear-gradient(to bottom, #b3e5fc, #e1f5fe);
-
 color:#0288d1;
-
-overflow:hidden; /* Tetap hidden untuk body, halaman akan mengatur scroll sendiri */
-
+overflow:hidden;
 min-height:100vh;
-
 position:relative;
-
 }
-
 body::before {
-
 content:"";
-
 position:absolute;
-
-top:0;
-
-left:0;
-
-width:100%;
-
-height:100%;
-
-background:linear-gradient(to bottom, rgba(179,229,252,0.5), rgba(225,245,254,0.5));
-
-z-index:-1;
-
-}
-
-.page{
-
-position:absolute;width:100%;height:100%;
-
 top:0;left:0;
-
+width:100%;height:100%;
+background:linear-gradient(to bottom, rgba(179,229,252,0.5), rgba(225,245,254,0.5));
+z-index:-1;
+}
+.page{
+position:absolute;width:100%;height:100%;
+top:0;left:0;
 display:flex;flex-direction:column;
-
 justify-content:center;align-items:center;
-
 text-align:center;
-
 opacity:0;transition:opacity 0.8s ease;
-
 padding:20px;
-
 }
-
 .page.active{opacity:1;z-index:10;}
-
 h1{font-size:2em;margin-bottom:10px;}
-
 p{font-size:1.1em;line-height:1.7;}
-
 button{
-
 margin-top:25px;
-
 padding:15px 35px;
-
 border:none;border-radius:15px;
-
 background:rgba(255,255,255,0.25);
-
 backdrop-filter:blur(12px);
-
 color:#0288d1;font-size:1em;cursor:pointer;
-
 box-shadow:0 8px 32px 0 rgba(31, 38, 135, 0.15);
-
 transition:all 0.3s ease;
-
 border:1px solid rgba(255,255,255,0.18);
-
 }
-
 button:hover{background:rgba(255,255,255,0.35);transform:scale(1.05);}
-
 .wave{
-
-position:absolute;bottom:0;left:0;
-
-width:200%;height:180px;
-
+position:absolute;bottom:0;left:0;width:200%;height:180px;
 background:url('https://i.ibb.co/TrxCp4B/wave-bg.png') repeat-x;
-
 background-size:cover;
-
 animation:wave 12s linear infinite;
-
 opacity:0.6;
-
 }
-
-@keyframes wave{
-
-from{transform:translateX(0);}
-
-to{transform:translateX(-50%);}
-
-}
-
-/* Halaman Puisi yang bisa di-scroll */
-#page5{
-
-overflow-y:auto;justify-content:flex-start;
-
-padding-top:60px;padding-bottom:100px;
-
-max-height:100vh;
-
-}
-
-/* Halaman Labirin yang bisa di-scroll */
-#page6{
-overflow-y:auto;
-justify-content:flex-start;
-padding-top: 60px;
-padding-bottom: 100px;
-max-height: 100vh;
-}
-
-/* Halaman Surat yang bisa di-scroll */
-#page8 {
-    overflow-y: auto;
-    justify-content: flex-start;
-    padding-top: 60px;
-    padding-bottom: 100px;
-    max-height: 100vh;
-}
-
-
-.poem-title{
-
-font-size:1.8em;font-weight:600;
-
-margin-bottom:25px;
-
-color:#0288d1;
-
-}
-
+@keyframes wave{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+#page5{overflow-y:auto;justify-content:flex-start;padding-top:60px;padding-bottom:100px;max-height:100vh;}
+.poem-title{font-size:1.8em;font-weight:600;margin-bottom:25px;color:#0288d1;}
 .poem-box{
-
 background:rgba(255,255,255,0.25);
-
 backdrop-filter:blur(15px);
-
 border-radius:18px;
-
 padding:30px;margin-bottom:30px;
-
-box-shadow:0 8px 32px 0 rgba(31, 38, 135, 0.15);
-
+box-shadow:0 8px 32px 0 rgba(31,38,135,0.15);
 max-width:600px;
-
 border:1px solid rgba(255,255,255,0.18);
-
 }
-
-.signature{
-
-font-size:0.9em;
-
-color:#0288d1;
-
-margin-bottom:40px;opacity:0.85;
-
-}
-
+.signature{font-size:0.9em;color:#0288d1;margin-bottom:40px;opacity:0.85;}
 audio{display:none;}
-
-/* Gaya untuk Game Labirin */
-#mazeCanvas {
-
-border: 2px solid #0288d1;
-
-border-radius: 10px;
-
-background-color: rgba(255, 255, 255, 0.8);
-
-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-
-margin: 20px 0;
-
-display: none; /* Sembunyikan canvas awalnya */
-
-}
-
-.player-info {
-
-display: flex;
-
-justify-content: center;
-
-align-items: center;
-
-gap: 20px;
-
-margin: 15px 0;
-
-font-size: 1.2em;
-
-}
-
-.emoji {
-
-font-size: 2em;
-
-}
-
-/* Gaya untuk input nama pemain */
-#playerNameForm {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-}
-
-#playerNameInput {
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.5);
-    background: rgba(255,255,255,0.5);
-    font-family: 'Quicksand', sans-serif;
-    font-size: 1em;
-    color: #0288d1;
-    text-align: center;
-    width: 250px;
-}
-
-/* Gaya untuk pesan akhir labirin */
-#mazeEndMessage {
-    display: none; /* Awalnya disembunyikan */
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.5);
-    backdrop-filter: blur(10px);
-    border-radius: 15px;
-}
-
-/* Gaya untuk Surat */
-.letter-container {
-
-width: 80%;
-
-max-width: 600px;
-
-height: 450px; /* Tambah tinggi untuk kenyamanan */
-
-margin: 0 auto;
-
-perspective: 1000px;
-
-}
-
-.letter {
-
-width: 100%;
-
-height: 100%;
-
-position: relative;
-
-transform-style: preserve-3d;
-
-transition: transform 0.8s;
-
-cursor: pointer;
-
-}
-
-.letter.open {
-
-transform: rotateY(180deg);
-
-}
-
-.letter-face {
-
-position: absolute;
-
-width: 100%;
-
-height: 100%;
-
-backface-visibility: hidden;
-
-border-radius: 10px;
-
-box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-
-display: flex;
-
-flex-direction: column;
-
-justify-content: center;
-
-align-items: center;
-
-padding: 30px;
-
-}
-
-.letter-front {
-
-background: linear-gradient(135deg, #ffd6e7 0%, #ffb6c1 100%);
-
-color: #d63384;
-
-}
-
-.letter-back {
-
-background: linear-gradient(135deg, #fff0f5 0%, #ffe6eb 100%);
-
-color: #d63384;
-
-transform: rotateY(180deg);
-
-font-family: 'Quicksand', sans-serif;
-display: block;
-text-align: left;
-padding: 40px;
-overflow-y: auto;
-position: relative;
-}
-
-.letter-salutation {
-    font-size: 1.2em;
-    font-weight: 600;
-    margin-bottom: 20px;
-}
-
-.letter-body {
-    font-size: 1.1em;
-    line-height: 1.7;
-}
-
-/* Gaya untuk tanda tangan di surat */
-.letter-signature {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    font-size: 1em;
-    font-weight: 600;
-    text-align: right;
-}
-
-/* Tema Pink untuk halaman terakhir */
-.pink-theme {
-background: linear-gradient(to bottom, #ffd6e7, #ffe6eb);
-color: #d63384;
-}
-
-.pink-theme button {
-background: rgba(255, 182, 193, 0.5);
-color: #d63384;
-}
-
-.pink-theme button:hover {
-background: rgba(255, 182, 193, 0.7);
-}
-
-.pink-theme h1, .pink-theme .poem-title {
-color: #d63384;
-}
-
-/* Hiasan untuk tema pink */
-.hearts {
-position: absolute;
-width: 100%;
-height: 100%;
-overflow: hidden;
-z-index: -1;
-}
-
-.heart {
-position: absolute;
-font-size: 20px;
-opacity: 0.7;
-animation: floatHeart 15s linear infinite;
-}
-
-@keyframes floatHeart {
-0% {
-transform: translateY(100vh) rotate(0deg);
-opacity: 0;
-}
-10% {
-opacity: 0.7;
-}
-90% {
-opacity: 0.7;
-}
-100% {
-transform: translateY(-100vh) rotate(360deg);
-opacity: 0;
-}
-}
-</style>
-
-</head>
-
-<body>
-
-<!-- Halaman 0: Welcome -->
-<div class="page active" id="page0">
-<h1>Welcome to Rasyad page</h1>
-<button id="btnWelcome">Lanjut</button>
-</div>
-
-<!-- Halaman 1 -->
-<div class="page" id="page1">
-<h1>play musicnya dulu ya maniess</h1>
-<button id="btnPlay">▶️ Play Music & Lanjut</button>
-</div>
-
-<!-- Halaman 2 -->
-<div class="page" id="page2">
-<h1>Hai nona Asya,</h1>
-<p>bagaimana perasaanmu hari ini?</p>
-<button id="btnHappy">Seneng bangett 😆</button>
-</div>
-
-<!-- Halaman 3: Compliment -->
-<div class="page" id="page3">
-<h1>ohh pantes, kamu kan makin cakep kalo lagi seneng</h1>
-<button id="btnCompliment">❤️</button>
-</div>
-
-<!-- Halaman 4 -->
-<div class="page" id="page4">
-<h1>Sesuai janjiku,</h1>
-<p>ini puisi buatmu, silakan dibaca yaa 💙</p>
-<button id="btnPoem">Lihat Puisi</button>
-</div>
-
-<!-- Halaman 5: Poem -->
-<div class="page" id="page5">
-<div class="poem-title">Ingin kenalmu lebih dekat</div>
-<div class="poem-box">
-<p>
-Kenapa dia datang begitu cepat?<br>
-Hembusan angin laut pun tidak kuat menahan<br>
-Apa ku kala itu ingat?<br>
-Ketika gadis itu menyapa di awal perjumpaan<br><br>
-
-Aku dan dia memang berbeda<br>
-Layaknya puncak gunung dengan pantai<br>
-Tapi selalu entah kenapa<br>
-Ada suatu yang ingin kurangkai<br><br>
-
-Apakah gadis itu mengerti?<br>
-Tentang apa yang ku inginkan<br>
-Dan apa dia mengerti?<br>
-Tentang apa yang dia lakukan<br><br>
-
-Sungguh, aku merasa mustahil<br>
-Bisakah kita saling memahami?<br>
-Aku bukan ingin mencintaimu dengan sederhana<br>
-Apalagi membiarkan perasaanku terserap oleh akar pohon<br><br>
-
-Layaknya kedamaian di lautan,<br>
-Aku hanya ingin mengenalmu tanpa batas
-</p>
-</div>
-<div class="signature">Puisi by Rasyad for Asya</div>
-<p>gimana sya, bagus?</p>
-<button id="btnAfterPoem">Lanjut</button>
-</div>
-
-<!-- Halaman 6: Maze Game -->
-<div class="page" id="page6">
-<h1>Maze Game</h1>
-<p>Main yukk</p>
-<div class="player-info">
-<span>Player: <span id="playerName" class="emoji">👩</span></span>
-<span>Goal: <span class="emoji">👨</span> Ray</span>
-</div>
-<p>Gunakan tombol panah di keyboard untuk bergerak menuju Ray! 👨</p>
-
-<!-- Form untuk input nama -->
-<div id="playerNameForm">
-    <input type="text" id="playerNameInput" placeholder="Masukkan nama kamu">
-    <button id="btnStartMaze">Mulai</button>
-</div>
-
-<!-- Canvas untuk game -->
-<canvas id="mazeCanvas" width="600" height="400"></canvas>
-
-<!-- Pesan dan tombol setelah menang -->
-<div id="mazeEndMessage">
-    <h2 id="congratsText">Selamat!</h2>
-    <p>Kamu berhasil menemukan Ray!</p>
-    <button id="btnFinishMaze">Lanjut</button>
-</div>
-
-</div>
-
-<!-- Halaman 7: After Maze -->
-<div class="page" id="page7">
-<h1>gimana sya, seru ngga? ada 1 hal lagi setelah ini, boleh kamu next</h1>
-<button id="btnAfterMaze">Lanjut</button>
-</div>
-
-<!-- Halaman 8: Letter -->
-<div class="page pink-theme" id="page8">
-<div class="hearts">
-<span class="heart" style="left: 10%; animation-delay: 0s;">❤️</span>
-<span class="heart" style="left: 20%; animation-delay: 2s;">💕</span>
-<span class="heart" style="left: 30%; animation-delay: 4s;">💖</span>
-<span class="heart" style="left: 40%; animation-delay: 6s;">💗</span>
-<span class="heart" style="left: 50%; animation-delay: 8s;">💓</span>
-<span class="heart" style="left: 60%; animation-delay: 10s;">💝</span>
-<span class="heart" style="left: 70%; animation-delay: 12s;">💘</span>
-<span class="heart" style="left: 80%; animation-delay: 14s;">💞</span>
-<span class="heart" style="left: 90%; animation-delay: 16s;">💟</span>
-</div>
-<h1>Letter for you</h1>
-<div class="letter-container">
-<div class="letter" id="letter">
-<div class="letter-face letter-front">
-<h2>Klik untuk membuka surat</h2>
-<div class="emoji" style="font-size: 3em; margin: 20px 0;">💌</div>
-</div>
-<div class="letter-face letter-back">
-    <p class="letter-salutation">Dear Basyasya Akila Rafifa,</p>
-    <div class="letter-body">
-        Aku minta maaf, cuma bisa nemenin sampai sini, kamu jangan sedih ya, temen kamu kan banyak, ada Karin, Farah, Tape, Zeva, dan semua yang ada di dofour. Kamu harus janji, apapun keadaannya kita nanti, tetep silaturahmi ya, sesekali menyapa dan berkabar. Aku bakal kangen banget ngelihat kamu secara langsung, jadi, besok2 saat kita ketemu lagi, pastiin kamu udah jadi orang yang sukses, dewasa, pokoknya sesuai yang kamu impikan selama ini. Terakhir, Makasih ya sya... mau berkenalan denganku. bye bye, see u on top.
-    </div>
-    <p class="letter-signature">from Rasyad Ramadhan Putra</p>
-</div>
-</div>
-</div>
-<button id="btnRestart">Kembali ke halaman awal</button>
-</div>
-
-<div class="wave"></div>
-<div class="sand"></div>
-<div class="starfish starfish1">⭐</div>
-<div class="starfish starfish2">⭐</div>
-<div class="starfish starfish3">⭐</div>
-<div class="shell shell1">🐚</div>
-<div class="shell shell2">🐚</div>
-<div class="shell shell3">🐚</div>
-
-<!-- Audio Sources -->
-<!-- GANTI DENGAN LINK GITHUB MU -->
-<audio id="bgMusic" loop>
-<source src="LINK_LAGU_1_DARI_GITHUB" type="audio/mpeg">
-</audio>
-
-<audio id="bgMusic2" loop>
-<source src="LINK_LAGU_2_DARI_GITHUB" type="audio/mpeg">
-</audio>
-
-<audio id="bgMusic3" loop>
-<source src="LINK_LAGU_3_DARI_GITHUB" type="audio/mpeg">
-</audio>
-
-<script>
-const pages = [
-document.getElementById('page0'), document.getElementById('page1'), document.getElementById('page2'), document.getElementById('page3'), document.getElementById('page4'), document.getElementById('page5'), document.getElementById('page6'), document.getElementById('page7'), document.getElementById('page8')
-];
-
-const music = document.getElementById('bgMusic');
-const music2 = document.getElementById('bgMusic2');
-const music3 = document.getElementById('bgMusic3');
-
-// Fungsi untuk pindah halaman
-function showPage(i) {
-    pages.forEach(p => p.classList.remove('active'));
-    pages[i].classList.add('active');
-}
-
-// Fungsi untuk menghentikan semua musik
-function stopAllMusic() {
-    [music, music2, music3].forEach(audio => {
-        audio.pause();
-        audio.currentTime = 0;
-    });
-}
-
-// --- EVENT LISTENERS UNTUK SETIAP HALAMAN ---
-
-// Page 0: Welcome
-document.getElementById('btnWelcome').addEventListener('click', () => showPage(1));
-
-// Page 1: Play Music
-document.getElementById('btnPlay').addEventListener('click', () => {
-    stopAllMusic();
-    music.currentTime = 11; // Mulai dari detik 11
-    music.play().catch(error => console.error("Autoplay prevented:", error));
-    showPage(2);
-});
-
-// Page 2: How are you
-document.getElementById('btnHappy').addEventListener('click', () => showPage(3));
-
-// Page 3: Compliment
-document.getElementById('btnCompliment').addEventListener('click', () => showPage(4));
-
-// Page 4: Poem intro
-document.getElementById('btnPoem').addEventListener('click', () => {
-    stopAllMusic();
-    music2.currentTime = 104; // Mulai dari 1:44
-    music2.play().catch(error => console.error("Autoplay prevented:", error));
-    showPage(5);
-});
-
-// Page 5: Poem
-document.getElementById('btnAfterPoem').addEventListener('click', () => {
-    showPage(6);
-    initMazeGame(); // Inisialisasi game saat halaman muncul
-});
-
-// Page 6: Maze Game
-document.getElementById('btnStartMaze').addEventListener('click', () => {
-    const nameInput = document.getElementById('playerNameInput');
-    playerName = nameInput.value || "Player";
-    document.getElementById('playerName').textContent = "👩 " + playerName;
-    
-    // Sembunyikan form, tampilkan canvas
-    document.getElementById('playerNameForm').style.display = 'none';
-    document.getElementById('mazeCanvas').style.display = 'block';
-
-    startMazeGame(); // Mulai game setelah nama dimasukkan
-});
-
-// Tombol untuk melanjutkan setelah menang labirin
-document.getElementById('btnFinishMaze').addEventListener('click', () => {
-    showPage(7); // Pindah ke halaman setelah labirin
-});
-
-
-// Page 7: After Maze
-document.getElementById('btnAfterMaze').addEventListener('click', () => {
-    stopAllMusic();
-    music3.currentTime = 152; // Mulai dari 2:32
-    music3.play().catch(error => console.error("Autoplay prevented:", error));
-    showPage(8);
-});
-
-// Page 8: Letter
-document.getElementById('letter').addEventListener('click', function() {
-    this.classList.toggle('open');
-});
-
-document.getElementById('btnRestart').addEventListener('click', () => {
-    stopAllMusic();
-    document.getElementById('letter').classList.remove('open');
-    showPage(0);
-});
-
-
-// --- KODE UNTUK GAME LABIRIN ---
-let canvas, ctx, player, goal, maze, cellSize, cols, rows, gameStarted, playerName;
-
-function initMazeGame() {
-    canvas = document.getElementById('mazeCanvas');
-    ctx = canvas.getContext('2d');
-    cellSize = 30;
-    cols = Math.floor(canvas.width / cellSize);
-    rows = Math.floor(canvas.height / cellSize);
-    gameStarted = false;
-
-    maze = generateMaze(cols, rows);
-    player = { x: 0, y: 0 };
-    goal = { x: cols - 1, y: rows - 1 };
-
-    // Reset form dan canvas visibility
-    document.getElementById('playerNameForm').style.display = 'flex';
-    document.getElementById('mazeCanvas').style.display = 'none';
-    document.getElementById('playerNameInput').value = '';
-    // Sembunyikan pesan menang
-    document.getElementById('mazeEndMessage').style.display = 'none';
-}
-
-function generateMaze(cols, rows) {
-    const grid = [];
-    for (let y = 0; y < rows; y++) {
-        grid[y] = [];
-        for (let x = 0; x < cols; x++) {
-            grid[y][x] = { x, y, walls: { top: true, right: true, bottom: true, left: true }, visited: false };
-        }
-    }
-    const stack = [];
-    const current = grid[0][0];
-    current.visited = true;
-    stack.push(current);
-    while (stack.length > 0) {
-        const current = stack[stack.length - 1];
-        const neighbors = getUnvisitedNeighbors(current, grid);
-        if (neighbors.length > 0) {
-            const next = neighbors[Math.floor(Math.random() * neighbors.length)];
-            removeWall(current, next, grid);
-            next.visited = true;
-            stack.push(next);
-        } else {
-            stack.pop();
-        }
-    }
-    return grid;
-}
-
-function getUnvisitedNeighbors(cell, grid) {
-    const neighbors = [];
-    const { x, y } = cell;
-    if (y > 0 && !grid[y - 1][x].visited) neighbors.push(grid[y - 1][x]);
-    if (x < grid[0].length - 1 && !grid[y][x + 1].visited) neighbors.push(grid[y][x + 1]);
-    if (y < grid.length - 1 && !grid[y + 1][x].visited) neighbors.push(grid[y + 1][x]);
-    if (x > 0 && !grid[y][x - 1].visited) neighbors.push(grid[y][x - 1]);
-    return neighbors;
-}
-
-function removeWall(current, next, grid) {
-    const dx = current.x - next.x;
-    const dy = current.y - next.y;
-    if (dx === 1) { grid[current.y][current.x].walls.left = false; grid[next.y][next.x].walls.right = false; }
-    else if (dx === -1) { grid[current.y][current.x].walls.right = false; grid[next.y][next.x].walls.left = false; }
-    if (dy === 1) { grid[current.y][current.x].walls.top = false; grid[next.y][next.x].walls.bottom = false; }
-    else if (dy === -1) { grid[current.y][current.x].walls.bottom = false; grid[next.y][next.x].walls.top = false; }
-}
-
-function drawMaze() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.strokeStyle = '#0288d1';
-    ctx.lineWidth = 2;
-
-    for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-            const cell = maze[y][x];
-            const xPos = x * cellSize;
-            const yPos = y * cellSize;
-            ctx.beginPath();
-            if (cell.walls.top) { ctx.moveTo(xPos, yPos); ctx.lineTo(xPos + cellSize, yPos); }
-            if (cell.walls.right) { ctx.moveTo(xPos + cellSize, yPos); ctx.lineTo(xPos + cellSize, yPos + cellSize); }
-            if (cell.walls.bottom) { ctx.moveTo(xPos + cellSize, yPos + cellSize); ctx.lineTo(xPos, yPos + cellSize); }
-            if (cell.walls.left) { ctx.moveTo(xPos, yPos + cellSize); ctx.lineTo(xPos, yPos); }
-            ctx.stroke();
-        }
-    }
-
-    // Gambar emoji pemain dan goal
-    ctx.font = `${cellSize * 0.8}px Arial`;
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    
-    // Goal (Ray)
-    ctx.fillText('👨', goal.x * cellSize + cellSize / 2, goal.y * cellSize + cellSize / 2);
-    
-    // Player
-    ctx.fillText('👩', player.x * cellSize + cellSize / 2, player.y * cellSize + cellSize / 2);
-}
-
-function startMazeGame() {
-    if (gameStarted) return;
-    gameStarted = true;
-    drawMaze();
-    document.addEventListener('keydown', handleKeyPress);
-}
-
-function handleKeyPress(e) {
-    if (!gameStarted) return;
-    let moved = false;
-    switch (e.key) {
-        case 'ArrowUp': if (player.y > 0 && !maze[player.y][player.x].walls.top) { player.y--; moved = true; } break;
-        case 'ArrowRight': if (player.x < cols - 1 && !maze[player.y][player.x].walls.right) { player.x++; moved = true; } break;
-        case 'ArrowDown': if (player.y < rows - 1 && !maze[player.y][player.x].walls.bottom) { player.y++; moved = true; } break;
-        case 'ArrowLeft': if (player.x > 0 && !maze[player.y][player.x].walls.left) { player.x--; moved = true; } break;
-    }
-    if (moved) {
-        drawMaze();
-        if (player.x === goal.x && player.y === goal.y) {
-            gameStarted = false;
-            document.removeEventListener('keydown', handleKeyPress);
-            
-            // Tampilkan pesan selamat dan tombol lanjut
-            document.getElementById('congratsText').innerText = `Selamat ${playerName}!`;
-            document.getElementById('mazeEndMessage').style.display = 'flex';
-        }
-    }
-}
-</script>
-
-<style>
-/* Hiasan pantai */
 .sand { position: absolute; bottom: 0; left: 0; width: 100%; height: 60px; background: linear-gradient(to top, #f2e6d9, transparent); z-index: 1; }
 .starfish, .shell { position: absolute; z-index: 2; font-size: 24px; opacity: 0.8; animation: float 4s ease-in-out infinite; }
 .starfish1 { bottom: 30px; left: 15%; animation-delay: 0s; }
@@ -823,7 +78,90 @@ function handleKeyPress(e) {
 .shell3 { bottom: 15px; left: 85%; animation-delay: 2.5s; }
 @keyframes float { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-10px) rotate(10deg); } }
 </style>
+</head>
+<body>
+<div class="page active" id="page0">
+<h1>Welcome to Rasyad page</h1>
+<button id="btnWelcome">Lanjut</button>
+</div>
+<div class="page" id="page1">
+<h1>Play musicnya dulu ya maniess</h1>
+<button id="btnPlay">▶️ Play Music & Lanjut</button>
+</div>
+<div class="page" id="page2">
+<h1>Hai nona Asya,</h1>
+<p>Bagaimana perasaanmu hari ini?</p>
+<button id="btnHappy">Seneng bangett 😆</button>
+</div>
+<div class="page" id="page3">
+<h1>Ohh pantes, kamu kan makin cakep kalo lagi seneng 💙</h1>
+<button id="btnCompliment">❤️</button>
+</div>
+<div class="page" id="page4">
+<h1>Sesuai janjiku,</h1>
+<p>Ini puisi buatmu, silakan dibaca yaa 💙</p>
+<button id="btnPoem">Lihat Puisi</button>
+</div>
+<div class="page" id="page5">
+<div class="poem-title">Ingin kenalmu lebih dekat</div>
+<div class="poem-box">
+<p>
+Kenapa dia datang begitu cepat?<br>
+Hembusan angin laut pun tidak kuat menahan<br>
+Apa ku kala itu ingat?<br>
+Ketika gadis itu menyapa di awal perjumpaan<br><br>
+Aku dan dia memang berbeda<br>
+Layaknya puncak gunung dengan pantai<br>
+Tapi selalu entah kenapa<br>
+Ada suatu yang ingin kurangkai<br><br>
+Apakah gadis itu mengerti?<br>
+Tentang apa yang ku inginkan<br>
+Dan apa dia mengerti?<br>
+Tentang apa yang dia lakukan<br><br>
+Sungguh, aku merasa mustahil<br>
+Bisakah kita saling memahami?<br>
+Aku bukan ingin mencintaimu dengan sederhana<br>
+Apalagi membiarkan perasaanku terserap oleh akar pohon<br><br>
+Layaknya kedamaian di lautan,<br>
+Aku hanya ingin mengenalmu tanpa batas
+</p>
+</div>
+<div class="signature">Puisi by Rasyad for Asya</div>
+<button id="btnAfterPoem">Lanjut</button>
+</div>
+<div class="wave"></div>
+<div class="sand"></div>
+<div class="starfish starfish1">⭐</div>
+<div class="starfish starfish2">⭐</div>
+<div class="starfish starfish3">⭐</div>
+<div class="shell shell1">🐚</div>
+<div class="shell shell2">🐚</div>
+<div class="shell shell3">🐚</div>
 
+<!-- Audio -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="bimbang.mp3" type="audio/mpeg">
+</audio>
+<audio id="bgMusic2" loop preload="auto">
+  <source src="k.mp3" type="audio/mpeg">
+</audio>
+<audio id="bgMusic3" loop preload="auto">
+  <source src="kita-usahakan-rumah-itu.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const pages = [page0,page1,page2,page3,page4,page5];
+const music = document.getElementById('bgMusic');
+const music2 = document.getElementById('bgMusic2');
+const music3 = document.getElementById('bgMusic3');
+function showPage(i){pages.forEach(p=>p.classList.remove('active'));pages[i].classList.add('active');}
+function stopAllMusic(){[music,music2,music3].forEach(a=>{a.pause();a.currentTime=0;});}
+btnWelcome.addEventListener('click',()=>showPage(1));
+btnPlay.addEventListener('click',()=>{stopAllMusic();music.play();showPage(2);});
+btnHappy.addEventListener('click',()=>showPage(3));
+btnCompliment.addEventListener('click',()=>showPage(4));
+btnPoem.addEventListener('click',()=>{stopAllMusic();music2.play();showPage(5);});
+btnAfterPoem.addEventListener('click',()=>{stopAllMusic();music3.play();alert("🎵 Tamat!");});
+</script>
 </body>
-
 </html>
